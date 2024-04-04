@@ -1,0 +1,25 @@
+name: Call consume repository
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      POKEMON: ${{ secrets.POKEMON }}
+      LEVEL: ${{ secrets.LEVEL }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Repository Dispatch
+        uses: QuasarwayGit/workflow-consume@main
+        with:
+          client-payload: |-
+            {
+              "POKEMON": "${{ env.POKEMON }}",
+              "LEVEL": "${{ env.LEVEL }}
+            }
